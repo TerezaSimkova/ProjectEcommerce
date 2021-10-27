@@ -1,0 +1,12 @@
+﻿@model ProdottoViewModel
+
+@{ ViewBag.Readonly = true;}
+<h1>Modifica un prodotto</h1>
+<form method="post">
+
+    <partial name="_Partial" model="Model" />
+
+    <input type="submit" value="Fai modifica" class="btn btn-warning" />
+    <input type="reset" value="Reset" class="btn btn-success" />
+    <a class="btn btn-primary" asp-controller="Prodotti" asp-action="Index" role="button">Indietro</a>
+</form>

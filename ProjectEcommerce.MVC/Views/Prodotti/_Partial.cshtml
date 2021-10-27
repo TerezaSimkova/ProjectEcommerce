@@ -1,0 +1,67 @@
+﻿@model ProdottoViewModel
+
+
+@if (ViewBag.Readonly == false)
+{
+    <div class="form-group">
+        <label asp-for="CodiceProdotto"></label>
+        <input asp-for="CodiceProdotto" class="form-control" />
+        <span asp-validation-for="CodiceProdotto" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Descrizione"></label>
+        <input asp-for="Descrizione" class="form-control" />
+        <span asp-validation-for="Descrizione" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Tipologia"></label>
+        <select asp-for="Tipologia" asp-items="@ViewBag.Tipologia" class="form-control">
+            <option value="">Selezionare un'opzione...</option>
+        </select>
+        <span asp-validation-for="Tipologia" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PrezzoAlPubblico">Prezzo</label>
+        <input asp-for="PrezzoAlPubblico" class="form-control" />
+        <span asp-validation-for="PrezzoAlPubblico" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PrezzoFornitore">PrezzoFornitore</label>
+        <input asp-for="PrezzoFornitore" class="form-control" />
+        <span asp-validation-for="PrezzoFornitore" class="text-danger"></span>
+    </div>
+}
+else
+{
+    <div class="form-group">
+        <label asp-for="CodiceProdotto"></label>
+        <input asp-for="CodiceProdotto" class="form-control"  readonly/>
+        <span asp-validation-for="CodiceProdotto" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Descrizione"></label>
+        <input asp-for="Descrizione" class="form-control" />
+        <span asp-validation-for="Descrizione" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Tipologia"></label>
+        <select asp-for="Tipologia" asp-items="@ViewBag.Tipologia" class="form-control">
+            <option value="">Selezionare un'opzione...</option>
+        </select>
+        <span asp-validation-for="Tipologia" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PrezzoAlPubblico">Prezzo</label>
+        <input asp-for="PrezzoAlPubblico" class="form-control" />
+        <span asp-validation-for="PrezzoAlPubblico" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PrezzoFornitore">PrezzoFornitore</label>
+        <input asp-for="PrezzoFornitore" class="form-control" readonly/>
+        <span asp-validation-for="PrezzoFornitore" class="text-danger"></span>
+    </div>
+}
