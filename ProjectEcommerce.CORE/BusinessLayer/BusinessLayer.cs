@@ -63,7 +63,12 @@ namespace ProjectEcommerce.CORE.BusinessLayer
 
         public bool InserisciNuovoUtente(Utente utenteRegister)
         {
-            throw new NotImplementedException();
+            Utente u = utenteRepo.Add(utenteRegister);
+            if (u == null)
+            {
+                return false;
+            }
+            return true;
         }
 
 
