@@ -91,7 +91,7 @@ namespace ProjectEcommerce.MVC.Controllers
             {
                 var utenteRegister = utenteViewModel.ToUtente();
                 BL.InserisciNuovoUtente(utenteRegister);
-                return RedirectToAction(nameof(Index));
+                return  Redirect("/");
             }
             return View(utenteViewModel);
         }

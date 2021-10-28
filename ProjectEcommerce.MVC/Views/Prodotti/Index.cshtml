@@ -4,8 +4,12 @@
 <br />
 @if (User.IsInRole("Administrator"))
 {
-    <h2>Per inserire nuovo prodotto -></h2>
-    <a class="btn btn-success" asp-controller="Prodotti" asp-action="Create" type="button">New Prodotto</a>
+    <p>
+        Per inserire nuovo prodotto ->
+        <a class="btn btn-success" asp-controller="Prodotti" asp-action="Create" type="button">New Prodotto</a>
+
+    </p>
+    <hr />
 }
 else if (User.IsInRole("Fornitore"))
 {
