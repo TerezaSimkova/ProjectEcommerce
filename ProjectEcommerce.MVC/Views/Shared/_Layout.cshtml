@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProjectEcommerce.MVC</title>
+    <title>@ViewData["Title"] - AmazonProject</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -11,31 +11,57 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProjectEcommerce.MVC</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AmazonProject</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Prodotti" asp-action="Index">Prodotti</a>
-                        </li>
-                    </ul>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Prodotti" asp-action="Index">Prodotti</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p>Bentornato @User.Identity.Name!<br /></p>
+
+                    <p>
+                        <a asp-controller="Utenti" asp-action="Logout">Logout</a>
+                    </p>
+
+                        
+                }
+                else
+                {
+                    <a asp-controller="Utenti" asp-action="Login">Login</a>
+                }
             </div>
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3 ">
             @RenderBody()
+            
         </main>
+        <div class="row justify-content-center">
+            <div class="card" style="width: auto">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Let´s do some shopping!</h4>
+                    <h6 class="card-subtitle  text-center mb-2 text-muted">We are happy that you visited our website!</h6>
+                    <p class="card-text">If you want to shop you need to be registreted or do login.</p>
+                    <a class="card-link" asp-controller="Utenti" asp-action="Register">Registration</a>
+                    <a href="#" class="card-link">See more -></a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">

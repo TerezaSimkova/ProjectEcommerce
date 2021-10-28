@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectEcommerce.CORE;
+using ProjectEcommerce.CORE.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ProjectEcommerce.EF
     public class ProdottoContext : DbContext
     {
         public DbSet<Prodotto> Prodotti { get; set; }
+        public DbSet<Utente> Utenti { get; set; }
         public ProdottoContext()
         {
 
@@ -28,6 +30,7 @@ namespace ProjectEcommerce.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration<Prodotto>(new ProdottoConfiguration());
+            modelBuilder.ApplyConfiguration<Utente>(new UtenteConfiguration());
         }
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using ProjectEcommerce.CORE.BusinessLayer;
 using ProjectEcommerce.CORE.Interfaces;
 using ProjectEcommerce.EF;
+using ProjectEcommerce.EF.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,12 +32,26 @@ namespace ProjectEcommerce.MVC
             services.AddControllersWithViews();
 
             services.AddScoped<IBusinessLayer, BusinessLayer>();
-            services.AddTransient<IRepositoryProdotto, RepositoryProdottoEF>();
+            services.AddScoped<IRepositoryProdotto, RepositoryProdottoEF>();
+            services.AddScoped<IRepositoryUtente, RepositoryUtenteEF>();
 
             services.AddDbContext<ProdottoContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("EFConnection"));
             });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(option =>
+                {
+                    option.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Utenti/Login");
+                    option.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Utenti/Forbidden");
+                });
+            //altri filtri ->policy, si puo fare sulla base del eta che magari non puo cosi accedere ad alcuine parti della pagina
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy => policy.RequireRole("Administrator"));
+                options.AddPolicy("User", policy => policy.RequireRole("User"));
+            }
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +72,7 @@ namespace ProjectEcommerce.MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectEcommerce.CORE.BusinessLayer;
 using ProjectEcommerce.MVC.Mapping;
@@ -42,6 +43,7 @@ namespace ProjectEcommerce.MVC.Controllers
         }
 
         #region Create
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -49,6 +51,7 @@ namespace ProjectEcommerce.MVC.Controllers
             return View(); 
         }
         [HttpPost]
+        [Authorize(Policy = "Admin")]
         public IActionResult Create(ProdottoViewModel prodottoViewModel)
         {
             if (ModelState.IsValid) 
@@ -63,20 +66,48 @@ namespace ProjectEcommerce.MVC.Controllers
         #endregion
 
         #region Update
+        [Authorize(Policy = "Admin")]
         [HttpGet("Prodotti/Update/{codiceProdotto}")]
         public IActionResult Update(string codiceProdotto)
         {
+            LoadViewBag();
             var prodotto = BL.GetAllProdotti().Find(s => s.CodiceProdotto == codiceProdotto);
             var conversione = prodotto.ToProdottoViewModel();
             return View(conversione);
         }
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public IActionResult Update(ProdottoViewModel prodottoViewModel)
         {
             if (ModelState.IsValid)
             {
                 var prodotto = prodottoViewModel.ToProdotto();
-                BL.ModificaProdotto(prodotto.CodiceProdotto, prodotto.Descrizione, prodotto.PrezzoAlPubblico,prodotto.Tipologia);
+                BL.ModificaProdotto(prodotto.CodiceProdotto, prodotto.Descrizione, prodotto.PrezzoAlPubblico, prodotto.Tipologia);
+                return RedirectToAction(nameof(Index));
+            }
+            LoadViewBag();
+            return View(prodottoViewModel);
+        }
+        #endregion
+
+
+        #region Delete
+        [Authorize(Policy = "Admin")]
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var prodotto = BL.GetAllProdotti().Find(s => s.Id == id);
+            var conversione = prodotto.ToProdottoViewModel();
+            return View(conversione);
+        }
+        [Authorize(Policy = "Admin")]
+        [HttpPost]
+        public IActionResult Delete(ProdottoViewModel prodottoViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var prodotto = prodottoViewModel.ToProdotto();
+                BL.EliminaProdotto(prodotto.Id);
                 return RedirectToAction(nameof(Index));
             }
             return View(prodottoViewModel);
